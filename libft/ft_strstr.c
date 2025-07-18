@@ -22,6 +22,8 @@ char	*ft_strstr(const char *str, const char *to_find)
 
 	i = 0;
 	j = 0;
+	if (!str)
+		return (NULL);
 	if (!*to_find)
 		return ((char *)str);
 	while (str[i])

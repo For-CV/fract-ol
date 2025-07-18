@@ -1,8 +1,8 @@
 NAME = fractol
 LIBFT_A = libft/libft.a
-SRC = prueba.c
+SRC = fractol.c
 OBJ = $(SRC:.c=.o)
-CFLAGS += -Wall -Wextra -Werror -Ilibft
+CFLAGS += -g -Wall -Wextra -Werror -Ilibft
 
 all: $(NAME)
 

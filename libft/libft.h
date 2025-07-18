@@ -96,5 +96,6 @@ void   		ft_free_prev_d(char **s, int pos);
 long		ft_atol(char *s);
 unsigned int	ft_abs(int n);
 int	ft_doubleptr_len(char **dptr);
+int ft_find_in_matrix(char  **m, char *to_find, int len);
 
 #endif

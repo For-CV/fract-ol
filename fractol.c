@@ -5,7 +5,7 @@
 int	ft_close(t_fractol *fractol)
 {
 	mlx_destroy_window(fractol -> mlx, fractol -> mlx_win);
-	// mlx_destroy_image(fractol -> mlx, fractol -> );
+	// mlx_destroy_image(fractol -> mlx, fractol -> img);
 	mlx_destroy_display(fractol->mlx);
 	free(fractol -> mlx);
 	exit(EXIT_SUCCESS);
@@ -22,9 +22,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	key_handler(int keysym, t_fractol *fractol)
 {
-	if (keysym == XK_Escape)
+	if (keysym == XK_Escape || keysym == DestroyNotify)
 		return (ft_close(fractol));
 	return (0);
+}
+
+int	ft_zoom()
+{
+
 }
 
 int	ft_parse_cl(char **argv, int argc, t_fractol *fractol)
@@ -77,9 +82,6 @@ int	ft_init_mlx(char **argv, int argc, t_fractol *fractol)
 		fractol -> set = 0;
 	else
 		return (1);
-	fractol -> mlx = mlx_init();
-	fractol -> mlx_win = mlx_new_window(fractol -> mlx, fractol -> width, fractol -> length, "FRACT'OL");
-	mlx_loop(fractol -> mlx);
 	return (0);
 }
 
@@ -95,7 +97,11 @@ int	main(int argc, char **argv)
 	fractol.length = 1252;
 	if (ft_init_mlx(argv, argc, &fractol))
 			return (write(2, ERR_MSSG, 54), 1);
+	fractol.mlx = mlx_init();
+	fractol.mlx_win = mlx_new_window(fractol.mlx, fractol.width, fractol.length, "FRACT'OL");
 	mlx_hook(fractol.mlx_win, KeyPress, KeyPressMask, key_handler, (void *)&fractol);
+	mlx_hook(fractol.mlx_win, DestroyNotify, 0, ft_close, (void *)&fractol);
+	mlx_loop(fractol.mlx);
 	// mlx_string_put(fractol.mlx, fractol.mlx_win, 750, 50, 0xFFFFFF, "FRACTOL");
 	// mlx_hook(fractol.mlx_win, KeyPress, KeyPressMask, key_handler, (void *)&fractol);
 	// mlx_loop(fractol.mlx);

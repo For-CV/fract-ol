@@ -17,17 +17,14 @@ typedef	struct s_fractol
 	int	set;
 	int	width;
 	int	length;
-	int	i;
+	int	index;
 }	t_fractol;
 
-typedef struct	s_img
+typedef	struct s_complex
 {
-	void	*img_ptr;
-	char	*pixels_ptr;
-	int		bpp;
-	int		endian;
-	int		line_len;
-}				t_img;
+	double	real;
+	double	imaginary;
+}	t_complex;
 
 typedef struct	s_data {
 	void	*img;
@@ -35,6 +32,7 @@ typedef struct	s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		zoom;
 }				t_data;
 
 #endif

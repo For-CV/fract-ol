@@ -12,11 +12,11 @@ int	ft_close(t_fractol *fractol)
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = fractol -> addr + (y * fractol -> line_length + x * (fractol -> bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -27,10 +27,29 @@ int	key_handler(int keysym, t_fractol *fractol)
 	return (0);
 }
 
-// int	ft_zoom()
-// {
+int	ft_zoom(int button, int x, int y, t_fractol *fractol)
+{
+	double prev_zoom;
+	double mouse_r;
+	double mouse_i;
 
-// }
+	if (!fractol)
+		return (1);
+	mouse_r = fractol->center_r - (x - fractol->width / 2.0) / (0.5 * fractol->zoom * fractol->width);
+	mouse_i = fractol->center_i - (y - fractol->length / 2.0) / (0.5 * fractol->zoom * fractol->length);
+	prev_zoom = fractol->zoom;
+	if (button == 4)
+		fractol->zoom *= 1.1;
+	if (button == 5 && fractol->zoom > 1)
+		fractol->zoom /= 1.1;
+	if (fractol->zoom < 1)
+		fractol->zoom = 1;
+	fractol->center_r = mouse_r + (fractol->center_r - mouse_r) * (fractol->zoom / prev_zoom);
+	fractol->center_i = mouse_i + (fractol->center_i - mouse_i) * (fractol->zoom / prev_zoom);
+	ft_create_img(fractol);
+	mlx_put_image_to_window(fractol -> mlx, fractol -> mlx_win, fractol -> img, 0, 0);
+	return (0);
+}
 
 int	ft_julia()
 {
@@ -71,7 +90,7 @@ int ft_color(int i)
 // 			z.real + z.imaginary * z.imaginary), fractol -> index) /
 // 			 fractol->index << 0)
 
-int	ft_mandelbrot(t_fractol *fractol, t_data *img, int x, int y)
+int	ft_mandelbrot(t_fractol *fractol, int x, int y)
 {
 	int	i;
 	t_complex	c;
@@ -79,8 +98,8 @@ int	ft_mandelbrot(t_fractol *fractol, t_data *img, int x, int y)
 	double temp;
 
 	i = 0;
-	c.real = (x - fractol -> width / 2.0) / (0.5 * img -> zoom * fractol -> width);
-	c.imaginary = (y - fractol->length / 2.0) / (0.5 * img -> zoom * fractol -> length);
+	c.real = (x - fractol -> width / 2.0) / (0.5 * fractol -> zoom * fractol -> width) + fractol -> center_r;
+	c.imaginary = (y - fractol->length / 2.0) / (0.5 * fractol -> zoom * fractol -> length) + fractol -> center_i;
 	z.real = 0;
 	z.imaginary = 0;
 	while (z.real * z.real + z.imaginary * z.imaginary <= 4 && i < fractol->index)
@@ -91,18 +110,18 @@ int	ft_mandelbrot(t_fractol *fractol, t_data *img, int x, int y)
 		i++;
 	}
 	if (i == fractol -> index)
-		my_mlx_pixel_put(img, x, y, 0x00000000);
+		my_mlx_pixel_put(fractol, x, y, 0x00000000);
 	else
-		my_mlx_pixel_put(img, x, y, ft_color(i));
+		my_mlx_pixel_put(fractol, x, y, ft_color(i));
 	return (0);
 }
 
-int	ft_create_img(t_fractol *fractol, t_data *img)
+int	ft_create_img(t_fractol *fractol)
 {
 	int	x;
 	int	y;
 
-	if (!fractol || !img)
+	if (!fractol)
 		return (1);
 	x = 0;
 	while (x < fractol->width)
@@ -111,7 +130,7 @@ int	ft_create_img(t_fractol *fractol, t_data *img)
 		while (y < fractol->length)
 		{
 			if (fractol -> set == 0)
-				ft_mandelbrot(fractol, img, x, y);
+				ft_mandelbrot(fractol, x, y);
 			else if (fractol -> set == 1)
 				ft_julia();
 			y++;
@@ -174,27 +193,50 @@ int	ft_load_mlx(char **argv, int argc, t_fractol *fractol)
 	return (0);
 }
 
+void	ft_init_fractol(t_fractol *fractol)
+{
+	fractol->mlx = NULL;
+	fractol->mlx_win = NULL;
+	fractol->img = NULL;
+	fractol->addr = NULL;
+	fractol->bits_per_pixel = 0;
+	fractol->line_length = 0;
+	fractol->endian = 0;
+	fractol->center_r = 0.0;
+	fractol->center_i = 0.0;
+	fractol->set = -1;
+	fractol->width = 500;
+	fractol->length = 500;
+	fractol->index = 100;
+	fractol->zoom = 1.0;
+}
+
 int	main(int argc, char **argv)
 {
 	t_fractol	fractol;
-	t_data	img;
 
 	if (argc < 2 || argc > 5)
 		return (write(2, ERR_MSSG, 54), 1);
-	fractol.index = 100;
-	fractol.width = 1000;
-	fractol.length = 1000;
-	img.zoom = 1;
+	ft_init_fractol(&fractol);
 	if (ft_load_mlx(argv, argc, &fractol))
 			return (write(2, ERR_MSSG, 54), 1);
 	fractol.mlx = mlx_init();
+	if (!fractol.mlx)
+    	return (1);
 	fractol.mlx_win = mlx_new_window(fractol.mlx, fractol.width, fractol.length, "FRACT'OL");
+	if (!fractol.mlx_win)
+    	return (1);
 	mlx_hook(fractol.mlx_win, KeyPress, KeyPressMask, key_handler, (void *)&fractol);
 	mlx_hook(fractol.mlx_win, DestroyNotify, 0, ft_close, (void *)&fractol);
-	img.img = mlx_new_image(fractol.mlx, fractol.width, fractol.length);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	ft_create_img(&fractol, &img);
-	mlx_put_image_to_window(fractol.mlx, fractol.mlx_win, img.img, 0, 0);
+	mlx_mouse_hook(fractol.mlx_win, ft_zoom, (void *)&fractol);
+	fractol.img = mlx_new_image(fractol.mlx, fractol.width, fractol.length);
+	if (!fractol.img)
+    	return (1);
+	fractol.addr = mlx_get_data_addr(fractol.img, &fractol.bits_per_pixel, &fractol.line_length, &fractol.endian);
+	if (!fractol.addr)
+    	return (1);
+	ft_create_img(&fractol);
+	mlx_put_image_to_window(fractol.mlx, fractol.mlx_win, fractol.img, 0, 0);
 	mlx_loop(fractol.mlx);
 	return (0);
 }

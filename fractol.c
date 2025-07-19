@@ -5,7 +5,7 @@
 int	ft_close(t_fractol *fractol)
 {
 	mlx_destroy_window(fractol -> mlx, fractol -> mlx_win);
-	// mlx_destroy_image(fractol -> mlx, fractol -> img);
+	mlx_destroy_image(fractol -> mlx, fractol -> img);
 	mlx_destroy_display(fractol->mlx);
 	free(fractol -> mlx);
 	exit(EXIT_SUCCESS);
@@ -44,6 +44,8 @@ int	ft_zoom(int button, int x, int y, t_fractol *fractol)
 		fractol->zoom /= 1.1;
 	if (fractol->zoom < 1)
 		fractol->zoom = 1;
+	if (fractol->zoom > 1e15)
+    	fractol->zoom = 1e15;
 	fractol->center_r = mouse_r + (fractol->center_r - mouse_r) * (fractol->zoom / prev_zoom);
 	fractol->center_i = mouse_i + (fractol->center_i - mouse_i) * (fractol->zoom / prev_zoom);
 	ft_create_img(fractol);
@@ -51,9 +53,53 @@ int	ft_zoom(int button, int x, int y, t_fractol *fractol)
 	return (0);
 }
 
-int	ft_julia()
+int	ft_julia2(int x, int y, t_fractol *fractol)
 {
-	// Implement Julia set logic here
+	t_complex	z;
+	double temp;
+	int	i;
+
+	if (!fractol)
+		return (1);
+	i = 0;
+	z.real = (x - fractol -> width * 0.5) / (0.5 * fractol -> zoom * fractol -> width) + fractol -> center_r;
+	z.imaginary = (y - fractol->length * 0.5) / (0.5 * fractol -> zoom * fractol -> length) + fractol -> center_i;
+	while (z.real * z.real + z.imaginary * z.imaginary <= 4 && i < fractol -> index)
+	{
+		temp = pow(z.real, 3) - 3 * z.real * pow(z.imaginary, 2) + 0.400;
+		z.imaginary = 3 * pow(z.real, 2) * z.imaginary - pow(z.imaginary, 3);
+		z.real = temp;
+		i++;
+	}
+	if (i == fractol -> index)
+		my_mlx_pixel_put(fractol, x, y, 0x00000000);
+	else
+		my_mlx_pixel_put(fractol, x, y, ft_color(i));
+	return (0);
+}
+
+int	ft_julia1(int x, int y, t_fractol *fractol)
+{
+	t_complex	z;
+	double temp;
+	int	i;
+
+	if (!fractol)
+		return (1);
+	i = 0;
+	z.real = (x - fractol -> width * 0.5) / (0.5 * fractol -> zoom * fractol -> width) + fractol -> center_r;
+	z.imaginary = (y - fractol->length * 0.5) / (0.5 * fractol -> zoom * fractol -> length) + fractol -> center_i;
+	while (z.real * z.real + z.imaginary * z.imaginary <= 4 && i < fractol -> index)
+	{
+		temp = z.real * z.real - z.imaginary * z.imaginary + 0.279;
+		z.imaginary = 2 * z.real * z.imaginary;
+		z.real = temp;
+		i++;
+	}
+	if (i == fractol -> index)
+		my_mlx_pixel_put(fractol, x, y, 0x00000000);
+	else
+		my_mlx_pixel_put(fractol, x, y, ft_color(i));
 	return (0);
 }
 
@@ -132,7 +178,11 @@ int	ft_create_img(t_fractol *fractol)
 			if (fractol -> set == 0)
 				ft_mandelbrot(fractol, x, y);
 			else if (fractol -> set == 1)
-				ft_julia();
+				ft_julia1(x, y, fractol);
+			else if (fractol -> set == 2)
+				ft_julia2(x, y, fractol);
+			else
+				return (1);
 			y++;
 		}
 		x++;
@@ -184,10 +234,12 @@ int	ft_load_mlx(char **argv, int argc, t_fractol *fractol)
 		free(argv[i_pos]);
 		argv[i_pos] = NULL;
 	}
-	if (ft_find_in_matrix(argv, "julia", argc) > 0)
+	if (ft_find_in_matrix(argv, "julia1", argc) > 0)
 		fractol -> set = 1;
 	else if (ft_find_in_matrix(argv, "mandelbrot", argc) > 0)
 		fractol -> set = 0;
+	else if (ft_find_in_matrix(argv, "julia2", argc) > 0)
+		fractol -> set = 2;
 	else
 		return (1);
 	return (0);

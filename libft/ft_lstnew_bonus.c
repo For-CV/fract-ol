@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:05:46 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/19 16:10:39 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:15:35 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_list	*ft_lstnew(void *content)
 	new_node = (t_list *)malloc(sizeof(t_list));
 	if (!new_node)
 		return (NULL);
-	new_node -> content = content;
-	new_node -> next = NULL;
+	new_node->content = content;
+	new_node->next = NULL;
 	return (new_node);
 }
 /*
@@ -43,13 +43,13 @@ int	main(void)
 
 //	printf("content = %p\n", content);
 	new_node = ft_lstnew(NULL);
-	if (!(new_node -> content))
+	if (!(new_node->content))
 		printf("NULL");
-	if (!(new_node -> next))
+	if (!(new_node->next))
 		printf("NULL");
-	free (new_node -> content);
+	free (new_node->content);
 	free (new_node);
-//	s = new_node -> content;
+//	s = new_node->content;
 //	printf("*s = %s\n", s);
 //	printf("s = %p\n", s);
 }*/

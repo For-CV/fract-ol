@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:31:47 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/21 14:58:35 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:32:23 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
  * copied.  Warning: If there is no null byte among the first n bytes of src,
  * the string placed  in  dest  will  not  be null-terminated.
 
- If  the  length  of src is less than n, strncpy() writes additional null bytes
+ If  the  len  of src is less than n, strncpy() writes additional null bytes
  to dest to ensure that a total of n bytes are written.
 
  RETURN VALUE

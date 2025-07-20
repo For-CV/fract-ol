@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 19:21:10 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/18 18:33:35 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:15:35 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 		return ;
 	while (lst)
 	{
-		f(lst -> content);
-		lst = lst -> next;
+		f(lst->content);
+		lst = lst->next;
 	}
 }
 /*
@@ -60,15 +60,15 @@ int	main(void)
 	printf("node2 = %p\n", node2);
 	printf("node3 = %p\n", node3);
 	printf("node4 = %p\n", node4);
-	printf("next1 = %p\n", node1 -> next);
-	printf("next2 = %p\n", node2 -> next);
-	printf("next3 = %p\n", node3 -> next);
-	printf("next4 = %p\n", node4 -> next);
+	printf("next1 = %p\n", node1->next);
+	printf("next2 = %p\n", node2->next);
+	printf("next3 = %p\n", node3->next);
+	printf("next4 = %p\n", node4->next);
 	lg = ft_lstsize(node1);
 	ft_lstiter(node1, to_uppercase_i);
-	printf("next1 = %s\n", (char *)node1 -> content);
-        printf("next2 = %s\n", (char *)node2 -> content);
-        printf("next3 = %s\n", (char *)node3 -> content);
-        printf("next4 = %s\n", (char *)node4 -> content);
+	printf("next1 = %s\n", (char *)node1->content);
+        printf("next2 = %s\n", (char *)node2->content);
+        printf("next3 = %s\n", (char *)node3->content);
+        printf("next4 = %s\n", (char *)node4->content);
 	printf("lg = %d\n", lg);
 }*/

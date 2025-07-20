@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 12:26:32 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/16 17:14:39 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:32:23 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
  *The strlcpy() and strlcat() functions copy and concatenate strings
 respectively.  They are designed to be safer, more consistent, and less error
 prone replacements for strncpy(3) and strncat(3).  Unlike those functions,
-strlcpy() and strlcat() take the full size of the buffer (not just the length)
+strlcpy() and strlcat() take the full size of the buffer (not just the len)
 and guarantee to NUL-terminate the result (as long as size is larger than 0 or,
 in the case of strlcat(), as long as there is at least one byte free in dst).
 Note that a byte for the NUL should be included in size.  Also note that
@@ -27,9 +27,9 @@ The strlcpy() function copies up to size - 1 characters from the NUL-terminated
 string src to dst, NUL-terminating the result.
 
 RETURN VALUES
-The strlcpy() and strlcat() functions return the total length of the string
-they tried to create. For strlcpy() that means the length of src.  For
-strlcat() that means the initial length of dst plus the length of src.  While
+The strlcpy() and strlcat() functions return the total len of the string
+they tried to create. For strlcpy() that means the len of src.  For
+strlcat() that means the initial len of dst plus the len of src.  While
 this may seem somewhat confusing, it was done to make truncation detection
 simple.
 */

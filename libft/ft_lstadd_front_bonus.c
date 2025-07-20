@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 14:08:38 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/18 18:32:52 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:15:35 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (lst && new)
 	{
-		new -> next = *lst;
+		new->next = *lst;
 		*lst = new;
 	}
 }

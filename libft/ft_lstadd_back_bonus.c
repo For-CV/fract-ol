@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:31:56 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/20 14:10:05 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:15:35 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	else
 	{
 		last = *lst;
-		while (last -> next != NULL)
-			last = last -> next;
-		last -> next = new;
+		while (last->next != NULL)
+			last = last->next;
+		last->next = new;
 	}
 }
 /*
@@ -55,11 +55,11 @@ int	main(void)
 	printf("node2 = %p\n", node2);
 	printf("node3 = %p\n", node3);
 	printf("node4 = %p\n", node4);
-	printf("next1 = %p\n", node1 -> next);
-	printf("next2 = %p\n", node2 -> next);
-	printf("next3 = %p\n", node3 -> next);
-	printf("next4 = %p\n", node4 -> next);
-	printf("next5 = %p\n", last_node -> next);
+	printf("next1 = %p\n", node1->next);
+	printf("next2 = %p\n", node2->next);
+	printf("next3 = %p\n", node3->next);
+	printf("next4 = %p\n", node4->next);
+	printf("next5 = %p\n", last_node->next);
 	lg = ft_lstsize(node1);
 	printf("lg = %d\n", lg);
 	ft_lstclear(&node1, free);

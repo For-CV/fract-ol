@@ -6,7 +6,7 @@
 /*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 20:27:40 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/06/09 18:23:17 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:41:25 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ char		*ft_strndup(const char *src, size_t n);
 void		ft_free_d(char **ptr);
 char		*ft_strnchr(const char *s, int c, unsigned int n);
 char		*ft_esc_char(char *s);
-void   		ft_free_prev_d(char **s, int pos);
+void		ft_free_prev_d(char **s, int pos);
 long		ft_atol(char *s);
-unsigned int	ft_abs(int n);
-int	ft_doubleptr_len(char **dptr);
-int ft_find_in_matrix(char  **m, char *to_find, int len);
+int			ft_doubleptr_len(char **ptr);
+int			ft_find_in_matrix(char **m, char *to_find, int len);
+size_t		ft_abs(int n);
 
 #endif

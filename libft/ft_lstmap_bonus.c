@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 18:08:17 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/04/19 22:19:15 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:15:35 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		return (NULL);
 	while (lst)
 	{
-		trans_content = f(lst -> content);
+		trans_content = f(lst->content);
 		if (!trans_content)
 		{
 			ft_lstclear(&new_lst, del);
@@ -65,7 +65,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		if (!new_node)
 			return (ft_errors_lst(trans_content, &new_lst, del));
 		ft_lstadd_back(&new_lst, new_node);
-		lst = lst -> next;
+		lst = lst->next;
 	}
 	return (new_lst);
 }
@@ -102,10 +102,10 @@ int     main(void)
 	printf("new_list1 = %p\n", new_list);
 //	while (new_list)
 //	{
-//		printf("new_list -> content = %s\n", (char *)new_list -> content);
+//		printf("new_list->content = %s\n", (char *)new_list->content);
 //		printf("new_list[%d] = %p\n", i, new_list);
-//		printf("new_list[%d] -> next = %p\n", i, new_list -> next);
-//		new_list = new_list -> next;
+//		printf("new_list[%d]->next = %p\n", i, new_list->next);
+//		new_list = new_list->next;
 //		i++;
 //	}
 	lg = ft_lstsize(new_list);

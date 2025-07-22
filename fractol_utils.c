@@ -20,10 +20,10 @@ int	ft_mandelbrot(t_data *data, int x, int y)
 	double		temp;
 
 	i = 0;
-	c.real = (x - data->width / 2.0) / (0.5
-			* data->zoom * data->width) + data->center_r;
-	c.i = (y - data->len / 2.0) / (0.5
-			* data->zoom * data->len) + data->center_i;
+	c.real = (x - (data->width >> 1)) / (data->zoom
+		* (data->width >> 1)) + data->center_r;
+	c.i = (y - (data->len >> 1)) / (data->zoom
+		* (data->len >> 1)) + data->center_i;
 	z.real = 0;
 	z.i = 0;
 	while (z.real * z.real + z.i * z.i <= 4 && i < data->index)

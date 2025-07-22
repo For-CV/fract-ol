@@ -22,10 +22,10 @@ int	ft_zoom(int button, int x, int y, t_data *data)
 
 	if (!data)
 		return (1);
-	mouse_r = data->center_r - (x - data->width / 2.0)
-		/ (0.5 * data->zoom * data->width);
-	mouse_i = data->center_i - (y - data->len / 2.0)
-		/ (0.5 * data->zoom * data->len);
+	mouse_r = data->center_r - (x - (data->width >> 1))
+		/ (data->zoom * (data->width >> 1));
+	mouse_i = data->center_i - (y - (data->len >> 1))
+		/ (data->zoom * (data->len >> 1));
 	prev_zoom = data->zoom;
 	if (button == 4)
 		data->zoom *= 1.1;
@@ -52,10 +52,10 @@ int	ft_julia2(int x, int y, t_data *data)
 	if (!data)
 		return (1);
 	i = 0;
-	z.real = (x - data->width * 0.5) / (0.5 * data->zoom
-			* data->width) + data->center_r;
-	z.i = (y - data->len * 0.5)
-		/ (0.5 * data->zoom * data->len) + data->center_i;
+	z.real = (x - (data->width >> 1)) / (data->zoom
+			* (data->width >> 1)) + data->center_r;
+	z.i = (y - (data->len >> 1))
+		/ (data->zoom * (data->len >> 1)) + data->center_i;
 	while (z.real * z.real + z.i * z.i <= 4 && i < data->index)
 	{
 		temp = pow(z.real, 3) - 3 * z.real * pow(z.i, 2) + 0.400;
@@ -79,10 +79,10 @@ int	ft_julia1(int x, int y, t_data *data)
 	if (!data)
 		return (1);
 	i = 0;
-	z.real = (x - data->width * 0.5) / (0.5
-			* data->zoom * data->width) + data->center_r;
-	z.i = (y - data->len * 0.5) / (0.5
-			* data->zoom * data->len) + data->center_i;
+	z.real = (x - (data->width >> 1)) / (data->zoom
+		* (data->width >> 1)) + data->center_r;
+	z.i = (y - (data->len >> 1)) / (data->zoom
+		* (data->len >> 1)) + data->center_i;
 	while (z.real * z.real + z.i * z.i <= 4 && i < data->index)
 	{
 		temp = z.real * z.real - z.i * z.i + 0.279;

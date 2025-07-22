@@ -50,10 +50,10 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		digit = str[i] - '0';
-		if (sign == 1 && r > (2147483647 - digit) / 10)
-			return (INT_MAX);
-		if (sign == -1 && r > (2147483648 - digit) / 10)
-			return (INT_MIN);
+		if (sign == 1 && r > (INT_MAX - digit) / 10)
+			return (0);
+		if (sign == -1 && r > (INT_MIN - digit) / 10)
+			return (0);
 		r = r * 10 + (str[i++] - '0');
 	}
 	return (sign * r);

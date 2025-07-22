@@ -55,9 +55,9 @@ long	ft_atol(const char *str)
 	{
 		digit = str[i] - '0';
 		if (sign == 1 && (r > (LONG_MAX - digit) / 10))
-			return (LONG_MAX);
+			return (0);
 		if (sign == -1 && (r < (LONG_MIN + digit) / 10))
-			return (LONG_MIN);
+			return (0);
 		r = r * 10 + (str[i++] - '0');
 	}
 	return (sign * r);

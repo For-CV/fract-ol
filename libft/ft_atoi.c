@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 /*
 #include <unistd.h>
 #include <stdio.h>
@@ -29,10 +31,10 @@ RETURN VALUE
 int	ft_atoi(const char *str)
 {
 	int	sign;
-	int	result;
+	int	r;
 	int	i;
+	int	digit;
 
-	result = 0;
 	i = 0;
 	sign = 1;
 	if (!str)
@@ -46,19 +48,23 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
-		i++;
+		digit = str[i] - '0';
+		if (sign == 1 && r > (2147483647 - digit) / 10)
+			return (INT_MAX);
+		if (sign == -1 && r > (2147483648 - digit) / 10)
+			return (INT_MIN);
+		r = r * 10 + (str[i++] - '0');
 	}
-	return (sign * result);
+	return (sign * r);
 }
 /*
 int     main(void)
 {
         char    *nbr = "  \t  -0\t12";
-        int     result;
+        int     r;
 
-        result = ft_atoi(nbr);
-        printf("ft_atoi = %d\n", result);
-        result = atoi(nbr);
-        printf("atoi = %d\n", result);
+        r = ft_atoi(nbr);
+        printf("ft_atoi = %d\n", r);
+        r = atoi(nbr);
+        printf("atoi = %d\n", r);
 }*/

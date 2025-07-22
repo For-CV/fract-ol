@@ -17,6 +17,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include <stdlib.h>
+# include <limits.h>
 
 int			ft_atoi(const char *str);
 void		*ft_bzero(void *s, size_t n);
@@ -93,7 +94,7 @@ void		ft_free_d(char **ptr);
 char		*ft_strnchr(const char *s, int c, unsigned int n);
 char		*ft_esc_char(char *s);
 void		ft_free_prev_d(char **s, int pos);
-long		ft_atol(char *s);
+long		ft_atol(const char *s);
 int			ft_doubleptr_len(char **ptr);
 int			ft_find_in_matrix(char **m, char *to_find, int len);
 size_t		ft_abs(int n);

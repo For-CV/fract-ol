@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include"libft.h"
 
 /*
 DESCRIPTION
@@ -35,9 +36,9 @@ long	ft_atol(const char *str)
 {
 	int		sign;
 	int		i;
-	long	result;
+	long	r;
+	int		digit;
 
-	result = 0;
 	i = 0;
 	sign = 1;
 	if (!str)
@@ -51,8 +52,12 @@ long	ft_atol(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
-		i++;
+		digit = str[i] - '0';
+		if (sign == 1 && (r > (LONG_MAX - digit) / 10))
+			return (LONG_MAX);
+		if (sign == -1 && (r < (LONG_MIN + digit) / 10))
+			return (LONG_MIN);
+		r = r * 10 + (str[i++] - '0');
 	}
-	return (sign * result);
+	return (sign * r);
 }

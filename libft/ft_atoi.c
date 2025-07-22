@@ -35,6 +35,7 @@ int	ft_atoi(const char *str)
 	int	i;
 	int	digit;
 
+	r = 0;
 	i = 0;
 	sign = 1;
 	if (!str)

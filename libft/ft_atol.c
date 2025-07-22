@@ -40,6 +40,7 @@ long	ft_atol(const char *str)
 	int		digit;
 
 	i = 0;
+	r = 0;
 	sign = 1;
 	if (!str)
 		return (0);

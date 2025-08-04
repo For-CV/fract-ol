@@ -135,23 +135,23 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc < 2 || argc > 5)
-		return (write(2, ERR_MSSG, 54), 1);
+		return (write(2, ERR_MSSG, 70), 1);
 	ft_init_data(&data);
 	data.mlx = mlx_init();
 	if (!data.mlx || ft_load_mlx(argv, argc, &data))
-		return (write(2, ERR_MSSG, 70), ft_close(&data), 1);
+		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
 	data.win = mlx_new_window(data.mlx, data.width, data.len, "FRACTOL");
 	if (!data.win)
-		return (write(2, ERR_MSSG, 70), ft_close(&data), 1);
+		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
 	mlx_hook(data.win, KeyPress, KeyPressMask, ctlkey, (void *)&data);
 	mlx_hook(data.win, DestroyNotify, 0, ft_close, (void *)&data);
 	mlx_mouse_hook(data.win, ft_zoom, (void *)&data);
 	data.img = mlx_new_image(data.mlx, data.width, data.len);
 	if (!data.img)
-		return (write(2, ERR_MSSG, 54), 1);
+		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
 	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_len, &data.e);
 	if (!data.addr)
-		return (write(2, ERR_MSSG, 54), 1);
+		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
 	ft_create_img(&data);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_loop(data.mlx);

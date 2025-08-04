@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rms35 <rms35@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:48:29 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/08/04 19:08:37 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/08/04 22:53:44 by rms35            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_load_mlx(char **argv, int argc, t_data *data)
 
 	if (ft_parse_cl(argv, argc, data) || data->index == 0)
 		return (1);
-	i_pos = ft_find_in_matrix(argv, "I=", argc);
+	i_pos = ft_find_in_matrix(argv, "I=", 2);
 	if (i_pos > 0)
 	{
 		argv[i_pos] = ft_strtrim(argv[i_pos], "I= ");
@@ -110,15 +110,15 @@ int	ft_load_mlx(char **argv, int argc, t_data *data)
 			return (1);
 		data->index = ft_atoi(argv[i_pos]);
 		free(argv[i_pos]);
-		if (data->index == 0)
-			return (1);
 		argv[i_pos] = NULL;
 	}
-	if (ft_find_in_matrix(argv, "julia1", argc) > 0)
+	if (data->index == 0 || data->len == 0 ||data->width == 0)
+		return (1);
+	if (ft_find_in_matrix(argv, "julia1", 6) > 0)
 		data->set = 1;
-	else if (ft_find_in_matrix(argv, "mandelbrot", argc) > 0)
+	else if (ft_find_in_matrix(argv, "mandelbrot", 10) > 0)
 		data->set = 0;
-	else if (ft_find_in_matrix(argv, "julia2", argc) > 0)
+	else if (ft_find_in_matrix(argv, "julia2", 6) > 0)
 		data->set = 2;
 	else
 		return (1);

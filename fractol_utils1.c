@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-int	ft_close(t_data *data)
+int	ft_close(t_data *data, int status)
 {
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
@@ -23,7 +23,7 @@ int	ft_close(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	exit(EXIT_SUCCESS);
+	exit(status);
 	return (0);
 }
 
@@ -40,6 +40,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	ctlkey(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape || keysym == DestroyNotify)
-		return (ft_close(data));
+		return (ft_close(data, EXIT_SUCCESS));
 	return (0);
 }

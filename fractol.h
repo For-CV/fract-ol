@@ -48,7 +48,7 @@ typedef struct s_complex
 	double	i;
 }	t_complex;
 
-int		ft_close(t_data *data);
+int		ft_close(t_data *data, int status);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		ctlkey(int keysym, t_data *data);
 int		ft_zoom(int button, int x, int y, t_data *data);

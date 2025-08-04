@@ -1,6 +1,7 @@
 {
   "files.associations": {
-    "mlx_int.h": "c"
+    "mlx_int.h": "c",
+    "fractol.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",

@@ -2,7 +2,7 @@ NAME = fractol
 LIBFT_A = libft/libft.a
 SRC = fractol.c fractol_utils.c fractol_utils1.c
 OBJ = $(SRC:.c=.o)
-CFLAGS += -g -Wall -Wextra -Werror -Ilibft
+CFLAGS +=  -Ilibft #-Wall -Wextra -Werror
 
 all: $(NAME)
 

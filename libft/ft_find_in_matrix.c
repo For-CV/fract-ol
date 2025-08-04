@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_find_in_matrix.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rms35 <rms35@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:02:02 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/08/04 18:03:09 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/08/04 22:50:28 by rms35            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 int	ft_find_in_matrix(char **m, char *to_find, int len)
 {
+	int	i;
+	int	m_len;
+
 	if (!m || !to_find || len < 0)
-		return (-1);
-	while (len - 1 >= 0)
+		return (-1);	
+	i = 0;
+	m_len = ft_doubleptr_len(m);
+	while (i < m_len)
 	{
-		if (!ft_strstr(m[len - 1], to_find))
-			return (len - 1);
-		len--;
+		if (ft_strnstr(m[i], to_find, len))
+			return (i);
+		i++;;
 	}
 	return (0);
 }

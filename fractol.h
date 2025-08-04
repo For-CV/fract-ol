@@ -6,7 +6,7 @@
 /*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:59:30 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/07/21 16:33:08 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:53:44 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <X11/keysym.h>
 # include "libft/libft.h"
 
-# define ERR_MSSG "fractol julia/mandelbrot\noptions:\nWIDTH={n}\n\
-len={n}\nI={n}\n"
+# define ERR_MSSG "fractol julia1/julia2/mandelbrot\noptions:\nWIDTH={n}\n\
+LENGTH={n}\nI={n}\n"
+# define DIGITS 123456789
 
 typedef struct s_data
 {

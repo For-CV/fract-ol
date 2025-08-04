@@ -6,7 +6,7 @@
 /*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:55:56 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/07/20 22:58:05 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:41:24 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	ft_close(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_image(data->mlx, data->img);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 	exit(EXIT_SUCCESS);
 	return (0);
 }

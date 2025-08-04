@@ -6,7 +6,7 @@
 /*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:00:07 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/07/20 22:57:35 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:10:03 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int	ft_julia1(int x, int y, t_data *data)
 		return (1);
 	i = 0;
 	z.real = (x - (data->width >> 1)) / (data->zoom
-		* (data->width >> 1)) + data->center_r;
+			* (data->width >> 1)) + data->center_r;
 	z.i = (y - (data->len >> 1)) / (data->zoom
-		* (data->len >> 1)) + data->center_i;
+			* (data->len >> 1)) + data->center_i;
 	while (z.real * z.real + z.i * z.i <= 4 && i < data->index)
 	{
 		temp = z.real * z.real - z.i * z.i + 0.279;
@@ -139,10 +139,10 @@ int	main(int argc, char **argv)
 	ft_init_data(&data);
 	data.mlx = mlx_init();
 	if (!data.mlx || ft_load_mlx(argv, argc, &data))
-		return (write(2, ERR_MSSG, 54), 1);
+		return (write(2, ERR_MSSG, 70), ft_close(&data), 1);
 	data.win = mlx_new_window(data.mlx, data.width, data.len, "FRACTOL");
 	if (!data.win)
-		return (write(2, ERR_MSSG, 54), 1);
+		return (write(2, ERR_MSSG, 70), ft_close(&data), 1);
 	mlx_hook(data.win, KeyPress, KeyPressMask, ctlkey, (void *)&data);
 	mlx_hook(data.win, DestroyNotify, 0, ft_close, (void *)&data);
 	mlx_mouse_hook(data.win, ft_zoom, (void *)&data);

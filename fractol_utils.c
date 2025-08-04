@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael-m <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:48:29 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/07/20 22:49:51 by rafael-m         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:08:37 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	ft_mandelbrot(t_data *data, int x, int y)
 
 	i = 0;
 	c.real = (x - (data->width >> 1)) / (data->zoom
-		* (data->width >> 1)) + data->center_r;
+			* (data->width >> 1)) + data->center_r;
 	c.i = (y - (data->len >> 1)) / (data->zoom
-		* (data->len >> 1)) + data->center_i;
+			* (data->len >> 1)) + data->center_i;
 	z.real = 0;
 	z.i = 0;
 	while (z.real * z.real + z.i * z.i <= 4 && i < data->index)
@@ -83,10 +83,10 @@ int	ft_parse_cl(char **argv, int argc, t_data *data)
 		free(argv[width_pos]);
 		argv[width_pos] = NULL;
 	}
-	len_pos = ft_find_in_matrix(argv, "len=", argc);
+	len_pos = ft_find_in_matrix(argv, "LENGTH=", argc);
 	if (len_pos > 0)
 	{
-		argv[len_pos] = ft_strtrim(argv[len_pos], "len= ");
+		argv[len_pos] = ft_strtrim(argv[len_pos], "LENGTH= ");
 		if (!argv[len_pos])
 			return (1);
 		data->len = ft_atoi(argv[len_pos]);
@@ -100,7 +100,7 @@ int	ft_load_mlx(char **argv, int argc, t_data *data)
 {
 	int	i_pos;
 
-	if (ft_parse_cl(argv, argc, data))
+	if (ft_parse_cl(argv, argc, data) || data->index == 0)
 		return (1);
 	i_pos = ft_find_in_matrix(argv, "I=", argc);
 	if (i_pos > 0)
@@ -110,6 +110,8 @@ int	ft_load_mlx(char **argv, int argc, t_data *data)
 			return (1);
 		data->index = ft_atoi(argv[i_pos]);
 		free(argv[i_pos]);
+		if (data->index == 0)
+			return (1);
 		argv[i_pos] = NULL;
 	}
 	if (ft_find_in_matrix(argv, "julia1", argc) > 0)

@@ -37,9 +37,7 @@ int	ft_zoom(int button, int x, int y, t_data *data)
 		* (data->zoom / prev_zoom);
 	data->center_i = mouse_i + (data->center_i - mouse_i)
 		* (data->zoom / prev_zoom);
-	ft_create_img(data);
-	mlx_put_image_to_window(data->mlx, data->win,
-		data->img, 0, 0);
+	ft_render(data);
 	return (0);
 }
 
@@ -47,6 +45,8 @@ int	ft_julia2(int x, int y, t_data *data)
 {
 	t_complex	z;
 	double		temp;
+	double		r2;
+	double		i2;
 	int			i;
 
 	if (!data)
@@ -58,15 +58,17 @@ int	ft_julia2(int x, int y, t_data *data)
 		/ (data->zoom * (data->len >> 1)) + data->center_i;
 	while (z.real * z.real + z.i * z.i <= 4 && i < data->index)
 	{
-		temp = pow(z.real, 3) - 3 * z.real * pow(z.i, 2) + 0.400;
-		z.i = 3 * pow(z.real, 2) * z.i - pow(z.i, 3);
+		r2 = z.real * z.real;
+		i2 = z.i * z.i;
+		temp = z.real * (r2 - 3 * i2) + 0.400;
+		z.i = z.i * (3 * r2 - i2);
 		z.real = temp;
 		i++;
 	}
 	if (i == data->index)
 		my_mlx_pixel_put(data, x, y, 0x00000000);
 	else
-		my_mlx_pixel_put(data, x, y, ft_color(i));
+		my_mlx_pixel_put(data, x, y, ft_color(data, i));
 	return (0);
 }
 
@@ -93,20 +95,36 @@ int	ft_julia1(int x, int y, t_data *data)
 	if (i == data->index)
 		my_mlx_pixel_put(data, x, y, 0x00000000);
 	else
-		my_mlx_pixel_put(data, x, y, ft_color(i));
+		my_mlx_pixel_put(data, x, y, ft_color(data, i));
 	return (0);
 }
 
-int	ft_color(int i)
+void	ft_create_palette(t_data *data)
 {
+	int	i;
 	int	r;
 	int	g;
 	int	b;
 
-	r = sin(0.10 * i + 0) * 127 + 128;
-	g = sin(0.10 * i + 2) * 127 + 128;
-	b = sin(0.10 * i + 4) * 127 + 128;
-	return (r << 16 | g << 8 | b);
+	data->palette = malloc(sizeof(int) * data->index);
+	if (!data->palette)
+		ft_close(data, EXIT_FAILURE);
+	i = 0;
+	while (i < data->index)
+	{
+		r = sin(0.10 * i + 0) * 127 + 128;
+		g = sin(0.10 * i + 2) * 127 + 128;
+		b = sin(0.10 * i + 4) * 127 + 128;
+		data->palette[i] = (r << 16 | g << 8 | b);
+		i++;
+	}
+}
+
+int	ft_color(t_data *data, int i)
+{
+	if (i < 0 || i >= data->index)
+		return (0x00000000);
+	return (data->palette[i]);
 }
 
 // int ft_color_smooth(int i, double z_abs, int max_iter)
@@ -135,25 +153,44 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc < 2 || argc > 5)
-		return (write(2, ERR_MSSG, 70), 1);
+	{
+		write(2, ERR_MSSG, 70);
+		return (1);
+	}
 	ft_init_data(&data);
 	data.mlx = mlx_init();
 	if (!data.mlx || ft_load_mlx(argv, argc, &data))
-		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
+	{
+		write(2, ERR_MSSG, 70);
+		ft_close(&data, EXIT_FAILURE);
+		return (1);
+	}
+	ft_create_palette(&data);
 	data.win = mlx_new_window(data.mlx, data.width, data.len, "FRACTOL");
 	if (!data.win)
-		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
+	{
+		write(2, ERR_MSSG, 70);
+		ft_close(&data, EXIT_FAILURE);
+		return (1);
+	}
 	mlx_hook(data.win, KeyPress, KeyPressMask, ctlkey, (void *)&data);
 	mlx_hook(data.win, DestroyNotify, 0, ft_close, (void *)&data);
 	mlx_mouse_hook(data.win, ft_zoom, (void *)&data);
 	data.img = mlx_new_image(data.mlx, data.width, data.len);
 	if (!data.img)
-		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
+	{
+		write(2, ERR_MSSG, 70);
+		ft_close(&data, EXIT_FAILURE);
+		return (1);
+	}
 	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_len, &data.e);
 	if (!data.addr)
-		return (write(2, ERR_MSSG, 70), ft_close(&data, EXIT_FAILURE), 1);
-	ft_create_img(&data);
-	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
+	{
+		write(2, ERR_MSSG, 70);
+		ft_close(&data, EXIT_FAILURE);
+		return (1);
+	}
+	ft_render(&data);
 	mlx_loop(data.mlx);
 	return (0);
 }

@@ -23,6 +23,8 @@ int	ft_close(t_data *data, int status)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
+	if (data->palette)
+		free(data->palette);
 	exit(status);
 	return (0);
 }
@@ -41,5 +43,16 @@ int	ctlkey(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape || keysym == DestroyNotify)
 		return (ft_close(data, EXIT_SUCCESS));
+	if (keysym == XK_Left)
+		data->center_r -= 0.1 / data->zoom;
+	else if (keysym == XK_Right)
+		data->center_r += 0.1 / data->zoom;
+	else if (keysym == XK_Up)
+		data->center_i -= 0.1 / data->zoom;
+	else if (keysym == XK_Down)
+		data->center_i += 0.1 / data->zoom;
+	else
+		return (0);
+	ft_render(data);
 	return (0);
 }

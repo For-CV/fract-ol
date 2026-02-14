@@ -36,7 +36,7 @@ int	ft_mandelbrot(t_data *data, int x, int y)
 	if (i == data->index)
 		my_mlx_pixel_put(data, x, y, 0x00000000);
 	else
-		my_mlx_pixel_put(data, x, y, ft_color(i));
+		my_mlx_pixel_put(data, x, y, ft_color(data, i));
 	return (0);
 }
 
@@ -68,51 +68,48 @@ int	ft_create_img(t_data *data)
 	return (0);
 }
 
+void	ft_render(t_data *data)
+{
+	ft_create_img(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+}
+
 int	ft_parse_cl(char **argv, int argc, t_data *data)
 {
-	int	width_pos;
-	int	len_pos;
+	int		i;
+	char	*trimmed;
 
-	width_pos = ft_find_in_matrix(argv, "WIDTH=", argc);
-	if (width_pos > 0)
+	i = 1;
+	while (i < argc)
 	{
-		argv[width_pos] = ft_strtrim(argv[width_pos], "WIDTH= ");
-		if (!argv[width_pos])
-			return (1);
-		data->width = ft_atoi(argv[width_pos]);
-		free(argv[width_pos]);
-		argv[width_pos] = NULL;
-	}
-	len_pos = ft_find_in_matrix(argv, "LENGTH=", argc);
-	if (len_pos > 0)
-	{
-		argv[len_pos] = ft_strtrim(argv[len_pos], "LENGTH= ");
-		if (!argv[len_pos])
-			return (1);
-		data->len = ft_atoi(argv[len_pos]);
-		free(argv[len_pos]);
-		argv[len_pos] = NULL;
+		if (ft_strnstr(argv[i], "WIDTH=", 6))
+		{
+			trimmed = ft_strtrim(argv[i], "WIDTH= ");
+			data->width = ft_atoi(trimmed);
+			free(trimmed);
+		}
+		else if (ft_strnstr(argv[i], "LENGTH=", 7))
+		{
+			trimmed = ft_strtrim(argv[i], "LENGTH= ");
+			data->len = ft_atoi(trimmed);
+			free(trimmed);
+		}
+		else if (ft_strnstr(argv[i], "I=", 2))
+		{
+			trimmed = ft_strtrim(argv[i], "I= ");
+			data->index = ft_atoi(trimmed);
+			free(trimmed);
+		}
+		i++;
 	}
 	return (0);
 }
 
 int	ft_load_mlx(char **argv, int argc, t_data *data)
 {
-	int	i_pos;
-
 	if (ft_parse_cl(argv, argc, data) || data->index == 0)
 		return (1);
-	i_pos = ft_find_in_matrix(argv, "I=", 2);
-	if (i_pos > 0)
-	{
-		argv[i_pos] = ft_strtrim(argv[i_pos], "I= ");
-		if (!argv[i_pos])
-			return (1);
-		data->index = ft_atoi(argv[i_pos]);
-		free(argv[i_pos]);
-		argv[i_pos] = NULL;
-	}
-	if (data->index == 0 || data->len == 0 ||data->width == 0)
+	if (data->len == 0 || data->width == 0)
 		return (1);
 	if (ft_find_in_matrix(argv, "julia1", 6) > 0)
 		data->set = 1;
@@ -141,4 +138,5 @@ void	ft_init_data(t_data *data)
 	data->len = 500;
 	data->index = 100;
 	data->zoom = 1.0;
+	data->palette = NULL;
 }

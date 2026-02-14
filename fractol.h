@@ -40,6 +40,7 @@ typedef struct s_data
 	int		len;
 	int		index;
 	double	zoom;
+	int		*palette;
 }	t_data;
 
 typedef struct s_complex
@@ -56,13 +57,11 @@ int		ft_julia1(int x, int y, t_data *data);
 int		ft_julia2(int x, int y, t_data *data);
 int		ft_mandelbrot(t_data *data, int x, int y);
 int		ft_create_img(t_data *data);
+void	ft_render(t_data *data);
 int		ft_parse_cl(char **argv, int argc, t_data *data);
 int		ft_load_mlx(char **argv, int argc, t_data *data);
-int		ft_color(int i);
+void	ft_create_palette(t_data *data);
+int		ft_color(t_data *data, int i);
 void	ft_init_data(t_data *data);
-int		ft_load_mlx(char **argv, int argc, t_data *data);
-int		ft_load_mlx(char **argv, int argc, t_data *data);
-int		ft_load_mlx(char **argv, int argc, t_data *data);
-int		ft_load_mlx(char **argv, int argc, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rafael-m <rafael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:55:56 by rafael-m          #+#    #+#             */
-/*   Updated: 2025/08/04 17:41:24 by rafael-m         ###   ########.fr       */
+/*   Updated: 2026/02/14 15:00:00 by rafael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_len + x
 			* (data->bpp >> 3));
 	*(unsigned int *)dst = color;
-	return ;
 }
 
 int	ctlkey(int keysym, t_data *data)
@@ -55,4 +54,23 @@ int	ctlkey(int keysym, t_data *data)
 		return (0);
 	ft_render(data);
 	return (0);
+}
+
+void	ft_init_data(t_data *data)
+{
+	data->mlx = NULL;
+	data->win = NULL;
+	data->img = NULL;
+	data->addr = NULL;
+	data->bpp = 0;
+	data->line_len = 0;
+	data->e = 0;
+	data->center_r = 0.0;
+	data->center_i = 0.0;
+	data->set = -1;
+	data->width = 500;
+	data->len = 500;
+	data->index = 100;
+	data->zoom = 1.0;
+	data->palette = NULL;
 }

@@ -1,7 +1,7 @@
 NAME = fractol
 LIBFT_A = libft/libft.a
 MLX_A = minilibx-linux/libmlx_Linux.a
-SRC = fractol.c fractol_utils.c fractol_utils1.c
+SRC = fractol.c fractol_utils.c fractol_utils1.c fractol_init.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror -O3 -Ilibft -Iminilibx-linux -Wno-incompatible-pointer-types
 

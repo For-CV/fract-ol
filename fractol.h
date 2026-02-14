@@ -60,6 +60,7 @@ int		ft_create_img(t_data *data);
 void	ft_render(t_data *data);
 int		ft_parse_cl(char **argv, int argc, t_data *data);
 int		ft_load_mlx(char **argv, int argc, t_data *data);
+void	ft_setup_mlx(t_data *data);
 void	ft_create_palette(t_data *data);
 int		ft_color(t_data *data, int i);
 void	ft_init_data(t_data *data);

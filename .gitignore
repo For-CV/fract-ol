@@ -1,4 +1,8 @@
 borrar.c
-
+build
+arquitectura.md
+checks.json
 Makefile.gen
 a.out
+.gitignore
+.vscode/
